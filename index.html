@@ -1,245 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beat the Mess Rush - LPU Smart Crowd & Food Management</title>
-    <style>
-        :root {
-            --primary: #14284b;
-            --secondary: #e6641e;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --bg-light: #f5f7fa;
-            --card-bg: #ffffff;
-            --text-dark: #282d37;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text-dark); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .phone-frame { width: 100%; max-width: 380px; height: 750px; background: var(--card-bg); border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden; position: relative; border: 10px solid #222; }
-        .status-bar { height: 35px; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 12px; font-weight: bold; color: #555; }
-        .screen { flex: 1; display: none; flex-direction: column; overflow-y: auto; padding: 20px; background: var(--card-bg); animation: fadeIn 0.3s ease-in-out; }
-        .screen.active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* Common Components */
-        h2 { color: var(--primary); font-size: 22px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
-        .back-btn { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--primary); font-weight: bold; }
-        .btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; text-align: center; width: 100%; margin-top: 15px; transition: background 0.2s; }
-        .btn:hover { background: #1d386b; }
-        .btn-secondary { background: var(--secondary); }
-        .badge { background: #eef2f7; color: var(--primary); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; display: inline-block; margin-bottom: 8px; }
-        
-        /* Splash Screen */
-        #splash { justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #14284b 0%, #1f3c6e 100%); color: white; }
-        .logo-icon { font-size: 50px; margin-bottom: 15px; }
-        
-        /* Dashboard */
-        .welcome-box { background: linear-gradient(135deg, #e6641e 0%, #ff8c42 id=780); color: white; padding: 20px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(230,100,30,0.3); }
-        .grid-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
-        .menu-card { background: var(--bg-light); padding: 20px; border-radius: 16px; text-align: center; cursor: pointer; transition: transform 0.2s, background 0.2s; border: 1px solid #e1e8ed; }
-        .menu-card:hover { transform: translateY(-3px); background: #edf2f7; }
-        .menu-card i { font-size: 24px; color: var(--primary); margin-bottom: 8px; display: block; }
-        
-        /* Live Crowd Screen */
-        .tabs { display: flex; gap: 8px; margin-bottom: 15px; }
-        .tab { flex: 1; padding: 8px; background: #eef2f7; border: none; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer; color: var(--text-dark); }
-        .tab.active { background: var(--primary); color: white; }
-        .crowd-card { background: var(--bg-light); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 15px; border: 2px solid #ddd; }
-        .crowd-status { font-size: 20px; font-weight: bold; margin: 10px 0; }
-        .status-green { color: var(--success); }
-        .status-yellow { color: #d97706; }
-        .status-red { color: var(--danger); }
-        
-        /* Form & Inputs */
-        .form-group { margin-bottom: 15px; text-align: left; }
-        label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: var(--text-dark); }
-        select, input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; outline: none; }
-        
-        /* Bottom Nav */
-        .bottom-nav { height: 60px; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; align-items: center; }
-        .nav-item { background: none; border: none; font-size: 12px; color: #777; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; }
-        .nav-item.active { color: var(--secondary); font-weight: bold; }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Beat the Mess Rush – LPU Smart Mess</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#64748b;--line:#e2e8f0;--navy:#1e3a5f;--or:#ea580c;--g:#16a34a;--y:#ca8a04;--r:#dc2626;--tint:#fff4ea}
+[data-theme=dark]{--bg:#0b1220;--card:#131c2e;--ink:#f1f5f9;--mut:#94a3b8;--line:#25324a;--navy:#93b4e0;--tint:#2a1c12}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{font-family:"Plus Jakarta Sans","Noto Sans Devanagari","Noto Sans Gurmukhi",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+button,select,textarea,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0}
+:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+[hidden]{display:none!important}
+.btn{background:var(--or);color:#fff;font-weight:800;padding:14px 22px;border-radius:12px;width:100%}
+.btn.alt{background:var(--navy);color:#fff}
+[data-theme=dark] .btn.alt{color:#0b1220}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+h1{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.1rem;font-weight:800;margin-bottom:10px}
+.mut{color:var(--mut);font-size:.92rem}
+.badge{display:inline-block;background:#fef3c7;color:#92400e;font-size:.75rem;font-weight:800;padding:4px 10px;border-radius:99px}
+
+/* full-screen auth views */
+.full{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:24px}
+#splash{background:linear-gradient(160deg,#0f172a,#1e3a5f);color:#fff;text-align:center}
+#splash .logo{width:92px;height:92px;border:3px solid var(--or);border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1.6rem;color:var(--or);margin:0 auto 18px}
+#splash h1{font-size:clamp(2.2rem,6vw,4rem)}
+#splash p{opacity:.8;margin:8px 0 28px;font-size:1.1rem}
+#splash .btn{width:auto;min-width:220px}
+.authbox{width:100%;max-width:420px}
+.authbox h1{margin-bottom:4px}
+.field{display:block;margin:14px 0}
+.field span{font-weight:600;font-size:.88rem}
+.field input,.field select,textarea{width:100%;margin-top:6px;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card)}
+.or{display:flex;align-items:center;gap:10px;color:var(--mut);margin:16px 0;font-size:.85rem}
+.or:before,.or:after{content:"";flex:1;height:1px;background:var(--line)}
+.authbox .btn.ghost{margin-bottom:10px}
+
+/* app shell */
+.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh;min-height:100dvh}
+.side{background:var(--card);border-right:1px solid var(--line);padding:24px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px}
+.brand{font-weight:800;font-size:1.25rem;margin:0 8px 18px}.brand b{color:var(--or)}
+.nav button{display:flex;gap:12px;align-items:center;width:100%;padding:12px 14px;border-radius:12px;background:none;font-weight:600;color:var(--mut);text-align:left}
+.nav button.on{background:var(--tint);color:var(--or)}
+.nav i{font-style:normal;font-size:1.2rem}
+.main{padding:32px clamp(20px,4vw,56px);min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:12px}
+.top .back{display:none;background:none;font-size:1.5rem;padding:4px 10px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:20px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 12px;text-align:center;font-weight:800}
+.tile i{display:block;font-style:normal;font-size:1.8rem;margin-bottom:6px}
+.hero{background:var(--or);color:#fff;border-radius:18px;padding:26px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.hero .btn{background:#fff;color:var(--or);width:auto;white-space:nowrap}
+.hero h2{font-size:1.5rem;margin-bottom:4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 18px}
+.tabs button{padding:10px 18px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-weight:600}
+.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+[data-theme=dark] .tabs button.on{color:#0b1220}
+.gauge{text-align:center}
+.gauge svg{width:min(100%,360px)}
+.lvl{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800}
+.legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:.88rem;margin-top:12px}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px}
+.G{color:var(--g)}.Y{color:var(--y)}.R{color:var(--r)}
+.row{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.row i{font-style:normal;font-size:1.3rem}
+.seg{display:flex;gap:8px}
+.seg button{flex:1;padding:14px;border-radius:12px;background:var(--card);border:2px solid var(--line);font-weight:700}
+.seg button.on{border-color:var(--or);background:var(--tint);color:var(--or)}
+.ok{width:84px;height:84px;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center;font-size:2.6rem;margin:0 auto 14px}
+.center{text-align:center;max-width:520px;margin:0 auto}
+.stars{display:flex;gap:6px;font-size:2.2rem;justify-content:center;margin:10px 0}
+.stars button{background:none;color:var(--line);font-size:2.2rem}.stars button.on{color:#f59e0b}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 18px}
+.chips button{padding:8px 16px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-weight:600}
+.chips button.on{background:var(--or);color:#fff;border-color:var(--or)}
+.avatar{width:84px;height:84px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:800;font-size:1.6rem;margin:0 auto 8px}
+.sw{display:flex;justify-content:space-between;align-items:center;padding:12px 0}
+.sw input{width:46px;height:26px;accent-color:var(--or)}
+.stat{display:flex;justify-content:space-between;align-items:center;background:var(--tint);border-radius:14px;padding:16px 20px;margin-top:14px;font-weight:800}
+.stat b{font-size:1.8rem;color:var(--or)}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:99px;font-weight:600;z-index:9}
+.bnav{display:none}
+
+/* laptop: fills screen with sidebar + wide content */
+@media (min-width:900px){.main{max-width:1400px;width:100%}.tabs{margin-top:0}}
+
+/* mobile: single column + bottom navigation */
+@media (max-width:899px){
+ .shell{display:block}
+ .side{display:none}
+ .main{padding:18px 16px calc(96px + env(safe-area-inset-bottom))}
+ .tiles{grid-template-columns:1fr 1fr;gap:12px}
+ .grid2{grid-template-columns:1fr}
+ .hero{flex-direction:column;align-items:flex-start}
+ .hero .btn{width:100%}
+ .top .back{display:block}
+ .bnav{display:flex;position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:5}
+ .bnav button{flex:1;background:none;color:var(--mut);font-size:.72rem;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px}
+ .bnav button i{font-style:normal;font-size:1.3rem}
+ .bnav button.on{color:var(--or)}
+}
+@media (prefers-reduced-motion:no-preference){.view{animation:in .25s ease}@keyframes in{from{opacity:0}to{opacity:1}}}
+</style>
 </head>
 <body>
 
-<div class="phone-frame">
-    <div class="status-bar">
-        <span>10:41</span>
-        <span>📶 🔋 100%</span>
-    </div>
+<section id="splash" class="full view">
+ <div><div class="logo">LPU</div><h1>Beat the Mess Rush</h1><p>Smart crowd &amp; food management for LPU messes</p><button class="btn" onclick="go('login')">Get started</button></div>
+</section>
 
-    <!-- 1. Splash Screen -->
-    <div id="splash" class="screen active">
-        <div class="logo-icon">🍽️</div>
-        <h1 style="font-size: 26px; margin-bottom: 5px;">LPU Mess</h1>
-        <p style="font-size: 13px; opacity: 0.8; margin-bottom: 30px;">Smart Crowd & Food Management</p>
-        <button class="btn btn-secondary" onclick="showScreen('home')" style="width: 200px;">Get Started →</button>
-    </div>
+<section id="login" class="full view" hidden>
+ <div class="authbox card">
+  <h1>Welcome back!</h1><p class="mut">Log in to continue</p>
+  <label class="field"><span>Student ID / Email</span><input id="uid" value="12612823" autocomplete="username"></label>
+  <label class="field"><span>Password</span><input type="password" value="password" autocomplete="current-password"></label>
+  <button class="btn" onclick="go('home')">Log in</button>
+  <div class="or">OR</div>
+  <button class="btn ghost" onclick="go('home')">Continue with Google</button>
+  <button class="btn ghost" onclick="go('home')">Continue with LPU ID</button>
+  <p class="mut" style="text-align:center">Don’t have an account? <b>Sign up</b></p>
+ </div>
+</section>
 
-    <!-- 2. Home Dashboard -->
-    <div id="home" class="screen">
-        <h2><span>Hello, Mohit! 👋</span> <span style="font-size:14px; color:#666;">LPU</span></h2>
-        <div class="welcome-box">
-            <span class="badge" style="background:rgba(255,255,255,0.2); color:white;">⚡ Quick Tip</span>
-            <h3>Need more food?</h3>
-            <p style="font-size: 13px; margin-top: 5px; opacity: 0.9;">Request a refill straight from your seat without waiting in long queues.</p>
-        </div>
-        <div class="grid-menu">
-            <div class="menu-card" onclick="showScreen('crowd')">
-                <i>📊</i>
-                <strong>Live Crowd</strong>
-            </div>
-            <div class="menu-card" onclick="showScreen('refill')">
-                <i>🍲</i>
-                <strong>Food Refill</strong>
-            </div>
-            <div class="menu-card" onclick="showScreen('history')">
-                <i>🕒</i>
-                <strong>My History</strong>
-            </div>
-            <div class="menu-card" onclick="showScreen('feedback')">
-                <i>⭐</i>
-                <strong>Feedback</strong>
-            </div>
-        </div>
-        <button class="btn" onclick="showScreen('profile')" style="background:#eef2f7; color:var(--primary);">My Profile & Settings</button>
-    </div>
+<div class="shell" id="shell" hidden>
+ <aside class="side"><div class="brand">LPU <b>Mess</b></div><nav class="nav" id="sidenav"></nav></aside>
+ <main class="main">
+  <div class="top"><button class="back" onclick="go('home')" aria-label="Back to home">←</button><h1 id="ttl"></h1><span class="mut" id="who">Mohit Dwivedi</span></div>
 
-    <!-- 3. Live Crowd Dashboard -->
-    <div id="crowd" class="screen">
-        <h2><button class="back-btn" onclick="showScreen('home')">←</button> Live Crowd Dashboard</h2>
-        <span class="badge">ℹ️ DEMO DATA (Simulated Peak Hours)</span>
-        <div class="tabs">
-            <button class="tab active" onclick="setMess('Mess 1')">Own Hostel Mess</button>
-            <button class="tab" onclick="setMess('Mess 2')">Central Mess</button>
-        </div>
-        <div class="crowd-card" id="crowdCardUI">
-            <h3 id="selectedMessTitle">Mess 1 (BH-1)</h3>
-            <div class="crowd-status status-green" id="crowdStatusText">🟢 Low Crowd</div>
-            <p style="font-size: 14px; color: #555;">Estimated Wait Time: <strong id="waitTimeText">4 mins</strong></p>
-            <p style="font-size: 12px; color: #888; margin-top: 8px;">Updated 2 mins ago</p>
-        </div>
-        <button class="btn btn-secondary" onclick="showScreen('refill')">Request Refill for This Mess</button>
-    </div>
+  <section id="home" class="view">
+   <div class="hero"><div><h2>Hello, Mohit!</h2><p>Need more food? Request a refill from your seat.</p></div><button class="btn" onclick="go('refill')">Request refill</button></div>
+   <div class="tiles">
+    <button class="tile" onclick="go('crowd')"><i>👥</i>Live crowd</button>
+    <button class="tile" onclick="go('refill')"><i>🍚</i>Food refill</button>
+    <button class="tile" onclick="go('history')"><i>🕘</i>Refills &amp; history</button>
+    <button class="tile" onclick="go('feedback')"><i>⭐</i>Feedback</button>
+   </div>
+   <div class="card"><h2>Quick info</h2><div id="quick"></div></div>
+  </section>
 
-    <!-- 4. Food Refill Request Screen -->
-    <div id="refill" class="screen">
-        <h2><button class="back-btn" onclick="showScreen('home')">←</button> Request Refill</h2>
-        <div style="text-align: center; margin-bottom: 20px;">
-            <span style="font-size: 40px;">🍲</span>
-            <p style="font-size: 13px; color: #666; margin-top: 5px;">Select your portion and send instant refill token.</p>
-        </div>
-        <div class="form-group">
-            <label>Select Mess Location</label>
-            <select id="refillMess">
-                <option>Own Hostel Mess (Mess 1)</option>
-                <option>Central Mess (Mess 2)</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Portion Size</label>
-            <select id="portionSize">
-                <option>Half Portion (Recommended to avoid waste)</option>
-                <option>Full Portion</option>
-            </select>
-        </div>
-        <button class="btn btn-secondary" onclick="submitRefill()">Submit Refill Request</button>
+  <section id="crowd" class="view" hidden>
+   <span class="badge">DEMO DATA (simulated peak hours)</span>
+   <div class="tabs" id="messTabs"></div>
+   <div class="grid2">
+    <div class="card gauge">
+     <h2 id="mname"></h2>
+     <svg viewBox="0 0 200 120" role="img" aria-label="Crowd gauge"><path d="M20 100A80 80 0 0 1 180 100" fill="none" stroke="var(--line)" stroke-width="16" stroke-linecap="round"/><path id="arc" d="M20 100A80 80 0 0 1 180 100" fill="none" stroke="var(--g)" stroke-width="16" stroke-linecap="round" stroke-dasharray="252" stroke-dashoffset="252" style="transition:all .6s"/></svg>
+     <div class="lvl" id="lvl"></div><div id="wait" style="font-weight:600"></div>
+     <div class="legend"><span><i class="dot" style="background:var(--g)"></i>Green &lt;5m</span><span><i class="dot" style="background:var(--y)"></i>Yellow 5–12m</span><span><i class="dot" style="background:var(--r)"></i>Red &gt;12m</span></div>
+     <p class="mut" style="margin-top:10px" id="upd"></p>
     </div>
+    <div class="card"><h2>Crowd trend (last 1 hour)</h2><svg id="chart" viewBox="0 0 300 150" style="width:100%"></svg><button class="btn" style="margin-top:14px" onclick="go('refill')">Request refill for this mess</button></div>
+   </div>
+  </section>
 
-    <!-- 5. Refill Status Success Screen -->
-    <div id="status" class="screen" style="justify-content: center; align-items: center; text-align: center;">
-        <span style="font-size: 60px; margin-bottom: 10px;">✅</span>
-        <h2 style="justify-content: center;">Request Submitted!</h2>
-        <p style="font-size: 14px; color: #666; margin-bottom: 20px;">Your food refill request has been sent to the serving counter. Estimated processing time: ~4 mins.</p>
-        <button class="btn" onclick="showScreen('home')">Back to Home</button>
-    </div>
+  <section id="refill" class="view" hidden>
+   <div class="card center">
+    <div class="avatar" style="background:var(--tint)">🍚</div><h2>Request for food refill</h2><p class="mut">Select your mess and portion, then send an instant refill token.</p>
+    <label class="field" style="text-align:left"><span>Mess location</span><select id="rmess"></select></label>
+    <div style="text-align:left;font-weight:600;font-size:.88rem;margin-bottom:6px">Portion size</div>
+    <div class="seg" id="portion"><button class="on" data-p="Half">Half (avoids waste)</button><button data-p="Full">Full</button></div>
+    <button class="btn" style="margin-top:18px" onclick="submitRefill()">Submit refill request</button>
+    <p class="mut" style="margin-top:12px">Your request will be processed within a few minutes.</p>
+   </div>
+  </section>
 
-    <!-- 6. History Screen -->
-    <div id="history" class="screen">
-        <h2><button class="back-btn" onclick="showScreen('home')">←</button> Refill History</h2>
-        <div style="background: #eef2f7; padding: 15px; border-radius: 12px; margin-bottom: 15px; font-size: 14px;">
-            <strong>Total Refills This Month:</strong> 12 times
-        </div>
-        <div style="font-size: 13px; display: flex; flex-direction: column; gap: 10px;">
-            <div style="background:#fff; border:1px solid #eee; padding:12px; border-radius:10px;">
-                <strong>Mess 1 (Half Portion)</strong><br><span style="color:#666;">Today, 2:45 PM • Completed</span>
-            </div>
-            <div style="background:#fff; border:1px solid #eee; padding:12px; border-radius:10px;">
-                <strong>Mess 2 (Full Portion)</strong><br><span style="color:#666;">Yesterday, 1:20 PM • Completed</span>
-            </div>
-        </div>
-    </div>
+  <section id="status" class="view" hidden>
+   <div class="card center"><div class="ok">✓</div><h2>Request submitted!</h2><p id="stmsg" class="mut"></p>
+    <div class="stat"><span>Estimated time</span><b id="eta">~4 mins</b></div>
+    <button class="btn alt" style="margin-top:16px" onclick="go('history')">Track status</button>
+    <button class="btn ghost" style="margin-top:10px" onclick="go('home')">Back to home</button></div>
+  </section>
 
-    <!-- 7. Feedback Screen -->
-    <div id="feedback" class="screen">
-        <h2><button class="back-btn" onclick="showScreen('home')">←</button> App Feedback</h2>
-        <div class="form-group">
-            <label>How was your experience?</label>
-            <div style="font-size: 24px; margin: 10px 0; text-align: center; cursor: pointer;">⭐⭐⭐⭐⭐</div>
-        </div>
-        <div class="form-group">
-            <label>Share your suggestions</label>
-            <textarea rows="3" placeholder="Write feedback here..." style="width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;"></textarea>
-        </div>
-        <button class="btn" onclick="alert('Thank you for your valuable feedback!'); showScreen('home');">Submit Feedback</button>
-    </div>
+  <section id="history" class="view" hidden>
+   <div class="tabs"><button class="on">Refill history</button><button onclick="toast('Usage stats are shown below')">Usage stats</button></div>
+   <div class="card"><div id="hlist"></div><div class="stat"><span>Total refills this month</span><b id="total">12</b></div></div>
+  </section>
 
-    <!-- 8. Profile & Settings -->
-    <div id="profile" class="screen">
-        <h2><button class="back-btn" onclick="showScreen('home')">←</button> My Profile</h2>
-        <div style="text-align: center; margin-bottom: 20px;">
-            <div style="width: 70px; height: 70px; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 10px;">👨‍💻</div>
-            <strong>Mohit Dwivedi</strong>
-            <p style="font-size: 12px; color: #666;">B.Tech CSE • LPU</p>
-        </div>
-        <div style="background: #f9f9f9; padding: 15px; border-radius: 12px; font-size: 14px; display: flex; flex-direction: column; gap: 10px;">
-            <div>🔔 <strong>Crowd Alerts:</strong> Enabled</div>
-            <div>🎨 <strong>App Theme:</strong> Light Mode</div>
-            <div>🌐 <strong>Language:</strong> English</div>
-        </div>
-        <button class="btn" style="background:#dc3545; margin-top:20px;" onclick="showScreen('splash')">Logout</button>
-    </div>
+  <section id="feedback" class="view" hidden>
+   <div class="card center"><h2>How was your experience?</h2>
+    <div class="stars" id="stars"></div>
+    <textarea id="fb" rows="4" placeholder="Share your suggestions…"></textarea>
+    <div style="text-align:left;font-weight:600;margin-top:14px">Feedback for</div>
+    <div class="chips" id="chips"><button>Live crowd</button><button>Food quality</button><button>Refill process</button></div>
+    <button class="btn" onclick="sendFb()">Submit feedback</button></div>
+  </section>
 
-    <!-- Bottom Navigation Bar -->
-    <div class="bottom-nav">
-        <button class="nav-item active" onclick="showScreen('home')">🏠<span>Home</span></button>
-        <button class="nav-item" onclick="showScreen('crowd')">📊<span>Crowd</span></button>
-        <button class="nav-item" onclick="showScreen('refill')">🍲<span>Refill</span></button>
-        <button class="nav-item" onclick="showScreen('profile')">👤<span>Profile</span></button>
+  <section id="profile" class="view" hidden>
+   <div class="grid2">
+    <div class="card" style="text-align:center"><div class="avatar">MD</div><h2 style="margin:0">Mohit Dwivedi</h2><p class="mut">B.Tech CSE · LPU</p><button class="btn ghost" style="margin-top:14px" onclick="go('history')">My refills &amp; history</button><button class="btn ghost" style="margin-top:10px" onclick="go('login')">Log out</button></div>
+    <div class="card"><h2>Notifications</h2>
+     <label class="sw">Crowd alerts<input type="checkbox" checked></label>
+     <label class="sw">Refill updates<input type="checkbox" checked></label>
+     <label class="sw">Important notices<input type="checkbox" checked></label>
+     <h2 style="margin-top:14px">App theme</h2>
+     <div class="seg" id="theme"><button data-t="light" class="on">Light</button><button data-t="dark">Dark</button><button data-t="system">System</button></div>
+     <label class="field"><span>Language</span><select id="lang" onchange="setLang(this.value)"><option value="en">English</option><option value="hi">हिन्दी</option><option value="pa">ਪੰਜਾਬੀ</option></select></label>
     </div>
+   </div>
+  </section>
+ </main>
+ <nav class="bnav" id="bnav"></nav>
 </div>
+<div class="toast" id="toast" hidden></div>
 
 <script>
-    function showScreen(screenId) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
-    }
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const NAV=[['home','🏠','Home'],['crowd','👥','Crowd'],['refill','🍚','Refill'],['history','🕘','History'],['feedback','⭐','Feedback'],['profile','👤','Profile']];
+const TITLES={home:'Home',crowd:'Live crowd dashboard',refill:'Request refill',status:'Refill request status',history:'My refills & history',feedback:'Feedback',profile:'Profile & settings'};
+const MESS=[{n:1,k:'Own hostel',w:4,t:[55,48,60,66,58]},{n:2,k:'Central',w:9,t:[40,62,70,64,72]},{n:3,k:'Central',w:15,t:[70,84,90,95,92]}];
+let cur=0,portion='Half',total=12,last=null,view='splash',lang='en';
+let hist=[[0,'Half','Today','2:45 PM'],[1,'Full','Today','1:20 PM'],[0,'Half','Yesterday','8:30 PM']];
+const AUTH=['splash','login'];
 
-    function setMess(messName) {
-        const title = document.getElementById('selectedMessTitle');
-        const status = document.getElementById('crowdStatusText');
-        const wait = document.getElementById('waitTimeText');
-        
-        if(messName === 'Mess 1') {
-            title.innerText = "Own Hostel Mess (BH-1)";
-            status.innerText = "🟢 Low Crowd";
-            status.className = "crowd-status status-green";
-            wait.innerText = "4 mins";
-        } else {
-            title.innerText = "Central Mess";
-            status.innerText = "🟡 Moderate Crowd";
-            status.className = "crowd-status status-yellow";
-            wait.innerText = "8 mins";
-        }
-    }
+/* ---- translations: [English, Hindi, Punjabi] ---- */
+const ROWS=[
+['Get started','शुरू करें','ਸ਼ੁਰੂ ਕਰੋ'],
+['Smart crowd & food management for LPU messes','LPU मेस के लिए स्मार्ट भीड़ और भोजन प्रबंधन','LPU ਮੈਸ ਲਈ ਸਮਾਰਟ ਭੀੜ ਅਤੇ ਖਾਣਾ ਪ੍ਰਬੰਧਨ'],
+['Welcome back!','वापसी पर स्वागत है!','ਜੀ ਆਇਆਂ ਨੂੰ ਵਾਪਸ!'],
+['Log in to continue','जारी रखने के लिए लॉग इन करें','ਜਾਰੀ ਰੱਖਣ ਲਈ ਲਾਗ ਇਨ ਕਰੋ'],
+['Student ID / Email','स्टूडेंट ID / ईमेल','ਸਟੂਡੈਂਟ ID / ਈਮੇਲ'],
+['Password','पासवर्ड','ਪਾਸਵਰਡ'],
+['Log in','लॉग इन','ਲਾਗ ਇਨ'],
+['OR','या','ਜਾਂ'],
+['Continue with Google','Google से जारी रखें','Google ਨਾਲ ਜਾਰੀ ਰੱਖੋ'],
+['Continue with LPU ID','LPU ID से जारी रखें','LPU ID ਨਾਲ ਜਾਰੀ ਰੱਖੋ'],
+['Don’t have an account?','खाता नहीं है?','ਖਾਤਾ ਨਹੀਂ ਹੈ?'],
+['Sign up','साइन अप करें','ਸਾਈਨ ਅੱਪ ਕਰੋ'],
+['Home','होम','ਹੋਮ'],['Crowd','भीड़','ਭੀੜ'],['Refill','रिफिल','ਰੀਫਿਲ'],['History','इतिहास','ਇਤਿਹਾਸ'],['Feedback','फीडबैक','ਫੀਡਬੈਕ'],['Profile','प्रोफ़ाइल','ਪ੍ਰੋਫਾਈਲ'],
+['Live crowd dashboard','लाइव भीड़ डैशबोर्ड','ਲਾਈਵ ਭੀੜ ਡੈਸ਼ਬੋਰਡ'],
+['Request refill','रिफिल का अनुरोध','ਰੀਫਿਲ ਦੀ ਬੇਨਤੀ'],
+['Refill request status','रिफिल अनुरोध की स्थिति','ਰੀਫਿਲ ਬੇਨਤੀ ਦੀ ਸਥਿਤੀ'],
+['My refills & history','मेरे रिफिल और इतिहास','ਮੇਰੇ ਰੀਫਿਲ ਅਤੇ ਇਤਿਹਾਸ'],
+['Profile & settings','प्रोफ़ाइल और सेटिंग्स','ਪ੍ਰੋਫਾਈਲ ਅਤੇ ਸੈਟਿੰਗਾਂ'],
+['Hello, Mohit!','नमस्ते, मोहित!','ਸਤ ਸ੍ਰੀ ਅਕਾਲ, ਮੋਹਿਤ!'],
+['Need more food? Request a refill from your seat.','और खाना चाहिए? अपनी सीट से रिफिल मंगाएँ।','ਹੋਰ ਖਾਣਾ ਚਾਹੀਦਾ ਹੈ? ਆਪਣੀ ਸੀਟ ਤੋਂ ਰੀਫਿਲ ਮੰਗੋ।'],
+['Live crowd','लाइव भीड़','ਲਾਈਵ ਭੀੜ'],['Food refill','खाना रिफिल','ਖਾਣਾ ਰੀਫਿਲ'],
+['Refills & history','रिफिल और इतिहास','ਰੀਫਿਲ ਅਤੇ ਇਤਿਹਾਸ'],
+['Quick info','त्वरित जानकारी','ਤੁਰੰਤ ਜਾਣਕਾਰੀ'],['View all','सभी देखें','ਸਭ ਵੇਖੋ'],
+['DEMO DATA (simulated peak hours)','डेमो डेटा (पीक आवर्स का सिमुलेशन)','ਡੈਮੋ ਡਾਟਾ (ਪੀਕ ਘੰਟਿਆਂ ਦੀ ਸਿਮੂਲੇਸ਼ਨ)'],
+['Crowd trend (last 1 hour)','भीड़ का रुझान (पिछला 1 घंटा)','ਭੀੜ ਦਾ ਰੁਝਾਨ (ਪਿਛਲਾ 1 ਘੰਟਾ)'],
+['Request refill for this mess','इस मेस के लिए रिफिल मंगाएँ','ਇਸ ਮੈਸ ਲਈ ਰੀਫਿਲ ਮੰਗੋ'],
+['Green <5m','हरा <5 मि','ਹਰਾ <5 ਮਿੰ'],['Yellow 5–12m','पीला 5–12 मि','ਪੀਲਾ 5–12 ਮਿੰ'],['Red >12m','लाल >12 मि','ਲਾਲ >12 ਮਿੰ'],
+['Low crowd','कम भीड़','ਘੱਟ ਭੀੜ'],['Moderate crowd','मध्यम भीड़','ਦਰਮਿਆਨੀ ਭੀੜ'],['High crowd','ज़्यादा भीड़','ਵੱਧ ਭੀੜ'],
+['Estimated wait time','अनुमानित प्रतीक्षा समय','ਅੰਦਾਜ਼ਨ ਉਡੀਕ ਸਮਾਂ'],['Wait time','प्रतीक्षा समय','ਉਡੀਕ ਸਮਾਂ'],
+['mins','मिनट','ਮਿੰਟ'],['Updated 2 mins ago','2 मिनट पहले अपडेट हुआ','2 ਮਿੰਟ ਪਹਿਲਾਂ ਅੱਪਡੇਟ ਹੋਇਆ'],
+['Mess','मेस','ਮੈਸ'],['Own hostel','अपना हॉस्टल','ਆਪਣਾ ਹੋਸਟਲ'],['Central','सेंट्रल','ਸੈਂਟਰਲ'],
+['Request for food refill','खाना रिफिल का अनुरोध','ਖਾਣਾ ਰੀਫਿਲ ਦੀ ਬੇਨਤੀ'],
+['Select your mess and portion, then send an instant refill token.','अपना मेस और पोर्शन चुनें, फिर तुरंत रिफिल टोकन भेजें।','ਆਪਣਾ ਮੈਸ ਅਤੇ ਪੋਰਸ਼ਨ ਚੁਣੋ, ਫਿਰ ਤੁਰੰਤ ਰੀਫਿਲ ਟੋਕਨ ਭੇਜੋ।'],
+['Mess location','मेस की जगह','ਮੈਸ ਦੀ ਥਾਂ'],['Portion size','पोर्शन का आकार','ਪੋਰਸ਼ਨ ਦਾ ਆਕਾਰ'],
+['Half (avoids waste)','आधा (खाना बर्बाद नहीं होगा)','ਅੱਧਾ (ਖਾਣਾ ਬਰਬਾਦ ਨਹੀਂ ਹੋਵੇਗਾ)'],
+['Full','पूरा','ਪੂਰਾ'],['Half','आधा','ਅੱਧਾ'],
+['Submit refill request','रिफिल अनुरोध भेजें','ਰੀਫਿਲ ਬੇਨਤੀ ਭੇਜੋ'],
+['Your request will be processed within a few minutes.','आपका अनुरोध कुछ ही मिनटों में प्रोसेस होगा।','ਤੁਹਾਡੀ ਬੇਨਤੀ ਕੁਝ ਮਿੰਟਾਂ ਵਿੱਚ ਪ੍ਰੋਸੈਸ ਹੋਵੇਗੀ।'],
+['Request submitted!','अनुरोध भेज दिया गया!','ਬੇਨਤੀ ਭੇਜ ਦਿੱਤੀ ਗਈ!'],
+['Estimated time','अनुमानित समय','ਅੰਦਾਜ਼ਨ ਸਮਾਂ'],['Track status','स्थिति देखें','ਸਥਿਤੀ ਵੇਖੋ'],['Back to home','होम पर वापस','ਹੋਮ ਤੇ ਵਾਪਸ'],
+['Your {p} refill request for {m} has been received.','{m} के लिए आपका {p} रिफिल अनुरोध मिल गया है।','{m} ਲਈ ਤੁਹਾਡੀ {p} ਰੀਫਿਲ ਬੇਨਤੀ ਮਿਲ ਗਈ ਹੈ।'],
+['Refill history','रिफिल इतिहास','ਰੀਫਿਲ ਇਤਿਹਾਸ'],['Usage stats','उपयोग के आँकड़े','ਵਰਤੋਂ ਦੇ ਅੰਕੜੇ'],
+['Total refills this month','इस महीने कुल रिफिल','ਇਸ ਮਹੀਨੇ ਕੁੱਲ ਰੀਫਿਲ'],
+['Refill completed','रिफिल पूरा हुआ','ਰੀਫਿਲ ਪੂਰਾ ਹੋਇਆ'],
+['Today','आज','ਅੱਜ'],['Yesterday','कल','ਕੱਲ੍ਹ'],['Just now','अभी','ਹੁਣੇ'],
+['Usage stats are shown below','उपयोग के आँकड़े नीचे दिखाए गए हैं','ਵਰਤੋਂ ਦੇ ਅੰਕੜੇ ਹੇਠਾਂ ਦਿਖਾਏ ਗਏ ਹਨ'],
+['How was your experience?','आपका अनुभव कैसा रहा?','ਤੁਹਾਡਾ ਤਜਰਬਾ ਕਿਵੇਂ ਰਿਹਾ?'],
+['Share your suggestions…','अपने सुझाव बताएँ…','ਆਪਣੇ ਸੁਝਾਅ ਦੱਸੋ…'],
+['Feedback for','फीडबैक किसके बारे में','ਫੀਡਬੈਕ ਕਿਸ ਬਾਰੇ'],
+['Food quality','खाने की गुणवत्ता','ਖਾਣੇ ਦੀ ਗੁਣਵੱਤਾ'],['Refill process','रिफिल प्रक्रिया','ਰੀਫਿਲ ਪ੍ਰਕਿਰਿਆ'],
+['Submit feedback','फीडबैक भेजें','ਫੀਡਬੈਕ ਭੇਜੋ'],
+['Thanks! Feedback submitted.','धन्यवाद! फीडबैक भेज दिया गया।','ਧੰਨਵਾਦ! ਫੀਡਬੈਕ ਭੇਜ ਦਿੱਤਾ ਗਿਆ।'],
+['B.Tech CSE · LPU','बी.टेक CSE · LPU','ਬੀ.ਟੈਕ CSE · LPU'],
+['Log out','लॉग आउट','ਲਾਗ ਆਊਟ'],['Notifications','सूचनाएँ','ਸੂਚਨਾਵਾਂ'],
+['Crowd alerts','भीड़ अलर्ट','ਭੀੜ ਅਲਰਟ'],['Refill updates','रिफिल अपडेट','ਰੀਫਿਲ ਅੱਪਡੇਟ'],
+['Important notices','ज़रूरी सूचनाएँ','ਜ਼ਰੂਰੀ ਸੂਚਨਾਵਾਂ'],
+['App theme','ऐप थीम','ਐਪ ਥੀਮ'],['Light','लाइट','ਲਾਈਟ'],['Dark','डार्क','ਡਾਰਕ'],['System','सिस्टम','ਸਿਸਟਮ'],
+['Language','भाषा','ਭਾਸ਼ਾ']];
+const D={},L={en:0,hi:1,pa:2};ROWS.forEach(r=>D[r[0]]=r);
+const t=(s,v)=>{let r=(lang!=='en'&&D[s])?D[s][L[lang]]:s;if(v)for(const k in v)r=r.replace('{'+k+'}',v[k]);return r};
+const mn=(m,full)=>`${t('Mess')} ${m.n}`+(full?` (${t(m.k)})`:'');
+const lv=w=>w<5?['Low crowd','G','var(--g)']:w<=12?['Moderate crowd','Y','var(--y)']:['High crowd','R','var(--r)'];
 
-    function submitRefill() {
-        showScreen('status');
-    }
+function applyLang(){
+  document.documentElement.lang=lang;
+  const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
+  while(n=w.nextNode()){
+    if(n.parentNode.closest('script,style'))continue;
+    if(n._o===undefined)n._o=n.nodeValue;
+    const k=n._o.trim();
+    if(k&&D[k])n.nodeValue=n._o.replace(k,t(k));
+  }
+  $('#fb').placeholder=t('Share your suggestions…');
+}
+function setLang(v){lang=v;buildRmess();go(view)}
+function toast(m){const e=$('#toast');e.textContent=t(m);e.hidden=false;clearTimeout(e.h);e.h=setTimeout(()=>e.hidden=true,2200)}
+function go(v){
+  view=v;
+  $$('.view').forEach(e=>e.hidden=e.id!==v);
+  const app=!AUTH.includes(v);$('#shell').hidden=!app;
+  if(app){$('#ttl').textContent=t(TITLES[v]);const k=v==='status'?'refill':v;$$('#sidenav button,#bnav button').forEach(b=>b.classList.toggle('on',b.dataset.v===k));
+    if(v==='crowd')drawCrowd();if(v==='history')drawHist();if(v==='home')drawQuick();if(v==='status')drawStatus();}
+  applyLang();window.scrollTo(0,0);
+}
+function mkNav(){
+  $('#sidenav').innerHTML=NAV.map(n=>`<button data-v="${n[0]}" onclick="go('${n[0]}')"><i>${n[1]}</i>${n[2]}</button>`).join('');
+  $('#bnav').innerHTML=NAV.filter(n=>n[0]!=='feedback').map(n=>`<button data-v="${n[0]}" onclick="go('${n[0]}')"><i>${n[1]}</i>${n[2]}</button>`).join('');
+}
+function buildRmess(){const s=$('#rmess'),i=Math.max(0,s.selectedIndex);s.innerHTML=MESS.map((m,j)=>`<option value="${j}">${mn(m,1)}</option>`).join('');s.selectedIndex=i}
+function drawQuick(){const m=MESS[0],l=lv(m.w);$('#quick').innerHTML=`<div class="row"><i class="${l[1]}">●</i><div style="flex:1"><b>${mn(m)} (${t(l[0])})</b><div class="mut">${t('Wait time')}: ${m.w} ${t('mins')}</div></div><button class="btn" style="width:auto;padding:8px 16px" onclick="go('crowd')">View all</button></div>`}
+function drawCrowd(){
+  $('#messTabs').innerHTML=MESS.map((m,i)=>`<button class="${i===cur?'on':''}" onclick="cur=${i};drawCrowd();applyLang()">${mn(m)} · ${t(m.k)}</button>`).join('');
+  const m=MESS[cur],l=lv(m.w);
+  $('#mname').textContent=mn(m,1);$('#lvl').textContent=t(l[0]);$('#lvl').className='lvl '+l[1];
+  $('#wait').textContent=`${t('Estimated wait time')}: ${m.w} ${t('mins')}`;$('#upd').textContent=t('Updated 2 mins ago');
+  const a=$('#arc');a.style.stroke=l[2];requestAnimationFrame(()=>a.style.strokeDashoffset=252*(1-Math.min(m.w/20,1)));
+  const xs=[30,100,170,240,285],ys=m.t.map(v=>120-v);
+  let g=[0,50,100].map(v=>`<line x1="30" x2="290" y1="${120-v}" y2="${120-v}" stroke="var(--line)"/><text x="2" y="${124-v}" font-size="9" fill="var(--mut)">${v}%</text>`).join('');
+  g+=['3pm','3:15','3:30','3:45','4pm'].map((s,i)=>`<text x="${xs[i]-8}" y="142" font-size="9" fill="var(--mut)">${s}</text>`).join('');
+  g+=`<polyline fill="none" stroke="var(--or)" stroke-width="3" points="${xs.map((x,i)=>x+','+ys[i]).join(' ')}"/>`+xs.map((x,i)=>`<circle cx="${x}" cy="${ys[i]}" r="4" fill="var(--or)"/>`).join('');
+  $('#chart').innerHTML=g;
+}
+function drawHist(){$('#hlist').innerHTML=hist.map(h=>`<div class="row"><i>🕘</i><div><b>${mn(MESS[h[0]])} – ${t('Refill completed')} (${t(h[1])})</b><div class="mut">${t(h[2])}${h[3]?', '+h[3]:''}</div></div></div>`).join('');$('#total').textContent=total}
+function submitRefill(){
+  const i=+$('#rmess').value;last={i,p:portion};hist.unshift([i,portion,'Just now','']);total++;go('status');
+}
+function drawStatus(){
+  if(!last)return;const m=MESS[last.i];
+  $('#stmsg').textContent=t('Your {p} refill request for {m} has been received.',{p:t(last.p).toLowerCase(),m:mn(m)});
+  $('#eta').textContent=`~${m.w} ${t('mins')}`;
+}
+function sendFb(){toast('Thanks! Feedback submitted.');$$('#stars button,#chips button').forEach(b=>b.classList.remove('on'));$('#fb').value=''}
+function setTheme(x){const d=x==='dark'||(x==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.dataset.theme=d?'dark':'light';$$('#theme button').forEach(b=>b.classList.toggle('on',b.dataset.t===x))}
+
+mkNav();buildRmess();
+$('#stars').innerHTML=[1,2,3,4,5].map(i=>`<button aria-label="${i} stars" data-i="${i}">★</button>`).join('');
+$('#stars').onclick=e=>{const i=+e.target.dataset.i;if(i)$$('#stars button').forEach((b,j)=>b.classList.toggle('on',j<i))};
+$('#chips').onclick=e=>{if(e.target.tagName==='BUTTON')e.target.classList.toggle('on')};
+$('#portion').onclick=e=>{const p=e.target.dataset.p;if(p){portion=p;$$('#portion button').forEach(b=>b.classList.toggle('on',b===e.target))}};
+$('#theme').onclick=e=>{if(e.target.dataset.t)setTheme(e.target.dataset.t)};
+setInterval(()=>{MESS.forEach(m=>m.w=Math.max(2,Math.min(20,m.w+Math.round(Math.random()*2-1))));if(view==='crowd')drawCrowd();if(view==='home')drawQuick();applyLang()},8000);
+applyLang();
 </script>
-
 </body>
 </html>
